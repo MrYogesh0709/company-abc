@@ -11,7 +11,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ["@material-ui/core/styles"],
+      external: ["@material-ui/core/styles", "@material-ui/core"],
     },
   },
 });
