@@ -3,13 +3,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import { TextField, Button, Grid, Container, Box } from "@mui/material";
 import { SnackbarComponent } from "../../components";
-import useStyles from "./Styles";
 
 const CreateTask = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { createTask, isLoading, displayAlert } = useAppContext();
-  const classes = useStyles();
 
   const initialState = {
     title: "",
@@ -46,7 +44,7 @@ const CreateTask = () => {
   return (
     <Container>
       <SnackbarComponent />
-      <form onSubmit={handleSubmit} className={classes.form}>
+      <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -100,7 +98,6 @@ const CreateTask = () => {
             variant="contained"
             color="primary"
             type="submit"
-            className={classes.submitButton}
             sx={{ mt: "2rem" }}
             disabled={isLoading}
           >

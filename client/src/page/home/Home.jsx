@@ -1,18 +1,30 @@
-import { Container, Box, Button, Grid, Typography } from "@mui/material";
+import {
+  Container,
+  Box,
+  Button,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import company from "../../assets/company.svg";
 import logo from "../../assets/logo.svg";
 import { Copyright, SnackbarComponent } from "../../components";
-import useStyles from "./styles";
 
 const Home = () => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Container>
       <SnackbarComponent />
       <Box sx={{ width: "100%", maxWidth: "400px", my: 4 }}>
-        <img src={logo} alt="company" style={{ width: "100%" }} />
+        <img
+          src={logo}
+          alt="company"
+          style={{ display: "block", maxWidth: "100%", height: "auto" }}
+        />
       </Box>
       <Box sx={{ flexGrow: 1, position: "relative" }}>
         <Grid container spacing={2}>
@@ -32,9 +44,15 @@ const Home = () => {
               <Button variant="contained">Login/Register</Button>
             </Link>
           </Grid>
-          <Grid item xs={6}>
-            <img className={classes.image} src={company} alt="loading..." />
-          </Grid>
+          {!isSmallScreen && (
+            <Grid item xs={12} sm={6}>
+              <img
+                style={{ maxWidth: "100%" }}
+                src={company}
+                alt="loading..."
+              />
+            </Grid>
+          )}
         </Grid>
         <Box sx={{ position: "absolute", bottom: -100, right: 0 }}>
           <Copyright />
