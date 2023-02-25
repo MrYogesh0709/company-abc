@@ -9,4 +9,9 @@ export default defineConfig({
       "/api/v1": "http://localhost:5000",
     },
   },
+  build: {
+    rollupOptions: {
+      external: ["@material-ui/core/styles"],
+    },
+  },
 });
