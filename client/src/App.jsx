@@ -7,6 +7,7 @@ import {
   DashboardEmployee,
   Error,
   Home,
+  ProtectedRoute,
   Register,
   Task,
 } from "./page";
@@ -16,13 +17,40 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute role="manager">
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/getAllEmployee"
+          element={
+            <ProtectedRoute role="manager">
+              <AllEmployee />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/createTask/:id"
+          element={
+            <ProtectedRoute>
+              <CreateTask />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/employee/task/:id"
+          element={
+            <ProtectedRoute>
+              <Task />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/dashboard/employee" element={<DashboardEmployee />} />
-        <Route path="/dashboard/createTask/:id" element={<CreateTask />} />
-        <Route path="/dashboard/employee/task/:id" element={<Task />} />
-        <Route path="/dashboard/getAllEmployee" element={<AllEmployee />} />
-        <Route path="/dashboard/user" element={<Register />} />
-        <Route path="/*" element={<Error />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

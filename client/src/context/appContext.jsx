@@ -16,6 +16,7 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_TASK_BEGIN,
   GET_EMPLOYEE_TASK_SUCCESS,
+  LOGOUT_CURRENT_USER,
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
   REMOVE_EMPLOYEE_SUCCESS,
@@ -31,13 +32,15 @@ export const initialState = {
   isLoading: false,
   user: null,
   tasks: [],
-  role: null,
+  role: "",
   employees: [],
   message: "",
   severity: "success",
   open: false,
   userLoading: true,
+  employee: null,
 };
+
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -89,6 +92,13 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const logoutCurrentUser = async () => {
+    await axios.get(`/api/v1/auth/logout`, {
+      withCredentials: true,
+    });
+    dispatch({ type: LOGOUT_CURRENT_USER });
+  };
+
   const logOutUserMessage = () => {
     dispatch({
       type: LOGOUT_USER,
@@ -105,7 +115,7 @@ const AppProvider = ({ children }) => {
       const { user, role } = data;
       dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, role } });
     } catch (error) {
-      logoutUser();
+      logoutCurrentUser();
     }
   };
 
@@ -115,8 +125,8 @@ const AppProvider = ({ children }) => {
       const { data } = await axios.get(`/api/v1/task/employee`, {
         withCredentials: true,
       });
-      const { tasks, user } = data;
-      dispatch({ type: GET_EMPLOYEE_TASK_SUCCESS, payload: { tasks, user } });
+      const { tasks } = data;
+      dispatch({ type: GET_EMPLOYEE_TASK_SUCCESS, payload: { tasks } });
     } catch (error) {
       dispatch({
         type: SET_ALERT,
@@ -280,9 +290,11 @@ const AppProvider = ({ children }) => {
       }
     }
   };
+
   useEffect(() => {
     getCurrentUser();
   }, []);
+
   return (
     <AppContext.Provider
       value={{

@@ -16,8 +16,14 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
 const AllEmployee = () => {
-  const { getAllEmployee, employees, removeEmployee, editEmployee } =
-    useAppContext();
+  const {
+    getAllEmployee,
+    employees,
+    removeEmployee,
+    editEmployee,
+    logoutUser,
+    logOutUserMessage,
+  } = useAppContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,13 +37,19 @@ const AllEmployee = () => {
     navigate(`/dashboard/employee/task/${props}`);
   };
 
+  const addNewUser = () => {
+    logOutUserMessage();
+    logoutUser();
+    navigate("/");
+  };
+
   return (
     <Container>
       <SnackbarComponent />
       <Button
         variant="contained"
         sx={{ margin: "1rem 0 1rem 0" }}
-        onClick={() => navigate("/")}
+        onClick={addNewUser}
       >
         Add New User
       </Button>

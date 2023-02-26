@@ -12,6 +12,7 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_TASK_BEGIN,
   GET_EMPLOYEE_TASK_SUCCESS,
+  LOGOUT_CURRENT_USER,
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
   REMOVE_EMPLOYEE_SUCCESS,
@@ -66,6 +67,13 @@ const reducer = (state, action) => {
         open: true,
       };
     }
+    case LOGOUT_CURRENT_USER: {
+      return {
+        ...initialState,
+        isLoading: false,
+        userLoading: false,
+      };
+    }
     case GET_CURRENT_USER_BEGIN: {
       return {
         ...state,
@@ -76,7 +84,7 @@ const reducer = (state, action) => {
     case GET_CURRENT_USER_SUCCESS: {
       return {
         ...state,
-        userLoading: true,
+        userLoading: false,
         user: action.payload.user,
         role: action.payload.role,
       };
@@ -93,7 +101,6 @@ const reducer = (state, action) => {
         ...state,
         isLoading: false,
         tasks: action.payload.tasks,
-        user: action.payload.user,
       };
     }
     case GET_EMPLOYEE_SPECIFIC_TASK_BEGIN: {
@@ -108,7 +115,7 @@ const reducer = (state, action) => {
         ...state,
         isLoading: false,
         tasks: action.payload.tasks,
-        user: action.payload.user,
+        employee: action.payload.user,
       };
     }
     case GET_EMPLOYEE_BEGIN: {
@@ -213,5 +220,4 @@ const reducer = (state, action) => {
       throw new Error(`no such action ${action.type}`);
   }
 };
-
 export default reducer;

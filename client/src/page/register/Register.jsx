@@ -27,13 +27,14 @@ const Register = () => {
   const {
     setupUser,
     isLoading,
-    role,
     message,
     severity,
     open,
     handleClose,
     displayAlert,
+    user,
   } = useAppContext();
+  console.log(user);
   const [values, setValues] = React.useState(initialState);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -64,13 +65,13 @@ const Register = () => {
   };
 
   React.useEffect(() => {
-    if (role === "manager") {
+    if (user?.role === "manager") {
       navigate("/dashboard");
     }
-    if (role === "employee") {
+    if (user?.role === "employee") {
       navigate("/dashboard/employee");
     }
-  }, [role, navigate]);
+  }, [user, navigate]);
 
   return (
     <Container component="main" maxWidth="xs">
