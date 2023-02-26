@@ -21,7 +21,6 @@ import { Link } from "react-router-dom";
 const DashboardEmployee = () => {
   const { getEmployeeTask, tasks, user, isLoading } = useAppContext();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-
   useEffect(() => {
     getEmployeeTask().then(() => setIsDataLoaded(true));
   }, []);
@@ -46,13 +45,22 @@ const DashboardEmployee = () => {
             }}
           >
             <Typography variant="h6" component="h2">
-              Name:{user.user}
+              Name:
+              <Typography variant="subtitle1" component="span">
+                {user.name}
+              </Typography>
             </Typography>
-            <Typography variant="subtitle1" component="p">
-              Role: {user.role}
+            <Typography variant="h6" component="h2">
+              Role:
+              <Typography variant="subtitle1" component="span">
+                {user.role}
+              </Typography>
             </Typography>
-            <Typography variant="subtitle1" component="p">
-              Status: {user.isActive ? "Active" : "Inactive"}
+            <Typography variant="h6" component="h2">
+              Status:
+              <Typography variant="subtitle1" component="span">
+                {user.isActive ? "Active" : "Inactive"}
+              </Typography>
             </Typography>
           </Box>
         )

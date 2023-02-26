@@ -19,9 +19,8 @@ import task from "../../assets/task.svg";
 import moment from "moment";
 
 const Task = () => {
-  const { getSpecificEmployeeTask, tasks, user, isLoading, updateTask } =
+  const { getSpecificEmployeeTask, tasks, employee, isLoading, updateTask } =
     useAppContext();
-  console.log(user);
   const { id } = useParams();
   const navigate = useNavigate();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
@@ -39,7 +38,7 @@ const Task = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        user && (
+        employee && (
           <Box
             sx={{
               display: "flex",
@@ -50,13 +49,22 @@ const Task = () => {
             }}
           >
             <Typography variant="h6" component="h2">
-              Name:{user.user}
+              Name:
+              <Typography variant="subtitle1" component="span">
+                {employee.user}
+              </Typography>
             </Typography>
-            <Typography variant="subtitle1" component="p">
-              Role: {user.role}
+            <Typography variant="h6" component="h2">
+              Role:
+              <Typography variant="subtitle1" component="span">
+                {employee.role}
+              </Typography>
             </Typography>
-            <Typography variant="subtitle1" component="p">
-              Status: {user.isActive ? "Active" : "Inactive"}
+            <Typography variant="h6" component="h2">
+              Status:
+              <Typography variant="subtitle1" component="span">
+                {employee.isActive ? "Active" : "Inactive"}
+              </Typography>
             </Typography>
           </Box>
         )
@@ -114,7 +122,7 @@ const Task = () => {
             </TableContainer>
             <Box display={"flex"} justifyContent="flex-end" mt={"2rem"}>
               <Button
-                onClick={() => addTaskEmployee(user?.id)}
+                onClick={() => addTaskEmployee(employee?.id)}
                 variant="contained"
                 sx={{
                   cursor: "pointer",
