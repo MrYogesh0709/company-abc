@@ -299,17 +299,11 @@ const AppProvider = ({ children }) => {
       }
     }
   };
-  const handleChange = ({ name, value }) => {
-    // console.log(name, value);
-    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
-  };
+
   const changePage = (page) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
 
-  const clearValue = () => {
-    dispatch({ type: CLEAR_VALUE });
-  };
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -332,8 +326,6 @@ const AppProvider = ({ children }) => {
         logOutUserMessage,
         createTask,
         updateTask,
-        handleChange,
-        clearValue,
         changePage,
       }}
     >

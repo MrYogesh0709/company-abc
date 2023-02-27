@@ -114,14 +114,6 @@ const reducer = (state, action) => {
         isLoading: true,
       };
     }
-    case HANDLE_CHANGE: {
-      //set page to 1 because as request start with page 1 o
-      return {
-        ...state,
-        page: 1,
-        [action.payload.name]: action.payload.value,
-      };
-    }
     case CHANGE_PAGE: {
       return {
         ...state,
