@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../../context/appContext";
-import { Loading, Logout, SnackbarComponent } from "../../components";
+import {
+  Loading,
+  Logout,
+  PageBtnContainer,
+  SnackbarComponent,
+} from "../../components";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import task from "../../assets/task.svg";
@@ -15,14 +20,14 @@ import {
   TableRow,
 } from "@mui/material";
 const Dashboard = () => {
-  const { getAllTask, tasks } = useAppContext();
+  const { getAllTask, tasks, numOfPages, page } = useAppContext();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     getAllTask().then(() => setIsDataLoaded(true));
-  }, []);
+  }, [page]);
 
   const employeeTask = (props) => {
     navigate(`/dashboard/employee/task/${props}`);
@@ -39,6 +44,9 @@ const Dashboard = () => {
         </Link>
         <Logout />
       </Box>
+      <Typography variant="h4" component="h4" textAlign="center">
+        All Task
+      </Typography>
       <Box sx={{ mt: "2rem" }}>
         {!isDataLoaded ? (
           <Loading />
@@ -110,6 +118,7 @@ const Dashboard = () => {
           </Box>
         )}
       </Box>
+      {numOfPages > 1 && <PageBtnContainer />}
     </Container>
   );
 };

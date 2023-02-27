@@ -34,7 +34,6 @@ const Register = () => {
     displayAlert,
     user,
   } = useAppContext();
-  console.log(user);
   const [values, setValues] = React.useState(initialState);
   const handleSubmit = async (event) => {
     event.preventDefault();

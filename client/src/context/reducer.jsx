@@ -1,4 +1,5 @@
 import {
+  CHANGE_PAGE,
   CLEAR_ALERT,
   CREATE_TASK_BEGIN,
   CREATE_TASK_SUCCESS,
@@ -12,6 +13,7 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_TASK_BEGIN,
   GET_EMPLOYEE_TASK_SUCCESS,
+  HANDLE_CHANGE,
   LOGOUT_CURRENT_USER,
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
@@ -101,6 +103,8 @@ const reducer = (state, action) => {
         ...state,
         isLoading: false,
         tasks: action.payload.tasks,
+        totalTasks: action.payload.totalJobs,
+        numOfPages: action.payload.numOfPages,
       };
     }
     case GET_EMPLOYEE_SPECIFIC_TASK_BEGIN: {
@@ -108,6 +112,20 @@ const reducer = (state, action) => {
         ...state,
         showAlert: false,
         isLoading: true,
+      };
+    }
+    case HANDLE_CHANGE: {
+      //set page to 1 because as request start with page 1 o
+      return {
+        ...state,
+        page: 1,
+        [action.payload.name]: action.payload.value,
+      };
+    }
+    case CHANGE_PAGE: {
+      return {
+        ...state,
+        page: action.payload.page,
       };
     }
     case GET_EMPLOYEE_SPECIFIC_TASK_SUCCESS: {

@@ -3,7 +3,9 @@ import { createContext, useContext, useReducer } from "react";
 import reducer from "./reducer";
 import PropTypes from "prop-types";
 import {
+  CHANGE_PAGE,
   CLEAR_ALERT,
+  CLEAR_VALUE,
   CREATE_TASK_BEGIN,
   CREATE_TASK_SUCCESS,
   EDIT_EMPLOYEE_BEGIN,
@@ -16,6 +18,7 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_TASK_BEGIN,
   GET_EMPLOYEE_TASK_SUCCESS,
+  HANDLE_CHANGE,
   LOGOUT_CURRENT_USER,
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
@@ -39,6 +42,9 @@ export const initialState = {
   open: false,
   userLoading: true,
   employee: null,
+  page: 1,
+  totalTasks: 0,
+  numOfPages: 1,
 };
 
 const AppContext = createContext();
@@ -138,12 +144,16 @@ const AppProvider = ({ children }) => {
 
   const getAllTask = async () => {
     dispatch({ type: GET_EMPLOYEE_TASK_BEGIN });
+    const { page } = state;
     try {
-      const { data } = await axios.get(`/api/v1/task/manager`, {
+      const { data } = await axios.get(`/api/v1/task/manager?page=${page}`, {
         withCredentials: true,
       });
-      const { tasks } = data;
-      dispatch({ type: GET_EMPLOYEE_TASK_SUCCESS, payload: { tasks } });
+      const { tasks, totalTasks, numOfPages } = data;
+      dispatch({
+        type: GET_EMPLOYEE_TASK_SUCCESS,
+        payload: { tasks, totalTasks, numOfPages },
+      });
     } catch (error) {
       dispatch({
         type: SET_ALERT,
@@ -289,7 +299,17 @@ const AppProvider = ({ children }) => {
       }
     }
   };
+  const handleChange = ({ name, value }) => {
+    // console.log(name, value);
+    dispatch({ type: HANDLE_CHANGE, payload: { name, value } });
+  };
+  const changePage = (page) => {
+    dispatch({ type: CHANGE_PAGE, payload: { page } });
+  };
 
+  const clearValue = () => {
+    dispatch({ type: CLEAR_VALUE });
+  };
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -312,6 +332,9 @@ const AppProvider = ({ children }) => {
         logOutUserMessage,
         createTask,
         updateTask,
+        handleChange,
+        clearValue,
+        changePage,
       }}
     >
       {children}

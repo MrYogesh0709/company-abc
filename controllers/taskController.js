@@ -87,8 +87,19 @@ const getAllTask = async (req, res) => {
   if (req.user.role !== "manager") {
     throw new UnauthenticatedError("Only managers are allowed");
   }
-  const tasks = await Task.find().sort("-createdAt");
-  res.status(StatusCodes.OK).json({ tasks });
+  const queryObject = { createdBy: req.user.userId };
+
+  let result = Task.find().sort("-createdAt");
+  //pagination
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
+  const tasks = await result;
+  const totalTasks = await Task.countDocuments(queryObject);
+  const numOfPages = Math.ceil(totalTasks / limit);
+  res.status(StatusCodes.OK).json({ tasks, totalTasks, numOfPages });
 };
 
 const getEmployeeTask = async (req, res) => {
