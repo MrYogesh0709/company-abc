@@ -23,6 +23,8 @@ const register = async (req, res) => {
 
   const verificationToken = await crypto.randomBytes(40).toString("hex");
   const origin = "https://comapny-abc.onrender.com";
+  // const origin = "http://localhost:5173";
+
   const user = new User({ name, email, role, password, verificationToken });
   await user.save();
   await sendVerificationEmail({

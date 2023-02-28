@@ -1,5 +1,8 @@
-const transporter = {
-  host: "smtp.ethereal.email",
+import dotenv from "dotenv";
+dotenv.config();
+
+const transporterMail = {
+  host: "smtp.gmail.com",
   port: 587,
   auth: {
     user: process.env.USER_MAIL,
@@ -7,4 +10,4 @@ const transporter = {
   },
 };
 
-export default transporter;
+export default transporterMail;
