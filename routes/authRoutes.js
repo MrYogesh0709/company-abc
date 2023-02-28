@@ -8,12 +8,14 @@ import {
   updateEmployeeStatus,
   getAllEmployee,
   getCurrentUser,
+  verifyEmail,
 } from "../controllers/authController.js";
 import authenticatedUser from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
+//*not  used this route yet
 router.post("/createEmployee", authenticatedUser, createEmployee);
 router.get("/getAllEmployee", authenticatedUser, getAllEmployee);
 router.delete("/removeEmployee/:id", authenticatedUser, removeEmployee);
@@ -22,7 +24,8 @@ router.patch(
   authenticatedUser,
   updateEmployeeStatus
 );
-router.get("/logout", logout);
+router.get("/logout", authenticatedUser, logout);
 router.route("/getCurrentUser").get(authenticatedUser, getCurrentUser);
+router.route("/verify-email").post(verifyEmail);
 
 export default router;

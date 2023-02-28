@@ -6,7 +6,9 @@ import {
   BadRequestError,
   NotFoundError,
 } from "../errors/index.js";
+import crypto from "crypto";
 import attachCookie from "../utils/attachCookie.js";
+import sendVerificationEmail from "../utils/sendVerificationEmail.js";
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -19,20 +21,37 @@ const register = async (req, res) => {
   const isFirstAccount = (await User.countDocuments({})) === 0;
   const role = isFirstAccount ? "manager" : "employee";
 
-  // Create a new user
-  const user = new User({ name, email, role, password });
+  const verificationToken = await crypto.randomBytes(40).toString("hex");
+  const origin = "https://comapny-abc.onrender.com";
+  const user = new User({ name, email, role, password, verificationToken });
   await user.save();
-  const token = user.createJWT();
-  attachCookie({ res, token });
-  res.status(StatusCodes.CREATED).json({
-    user: {
-      email: user.email,
-      role: user.role,
-      name: user.name,
-      isActive: user.isActive,
-    },
-    role: user.role,
+  await sendVerificationEmail({
+    name: name,
+    email: email,
+    verificationToken: verificationToken,
+    origin: origin,
   });
+
+  res.status(StatusCodes.CREATED).json({
+    msg: "Success! Please check your email to verify account",
+  });
+};
+
+const verifyEmail = async (req, res) => {
+  const { verificationToken, email } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new UnauthenticatedError("Verification failed no user found");
+  }
+  if (user.verificationToken !== verificationToken) {
+    throw new UnauthenticatedError("Verification failed");
+  }
+  user.isVerified = true;
+  user.verified = Date.now();
+  user.verificationToken = "";
+  await user.save();
+  res.status(StatusCodes.OK).json({ msg: "Email Verified" });
 };
 
 const login = async (req, res) => {
@@ -48,6 +67,9 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Incorrect password");
   }
+  if (!user.isVerified) {
+    throw new UnauthenticatedError("Please verify your email");
+  }
   const token = user.createJWT();
   attachCookie({ res, token });
   user.password = undefined;
@@ -62,6 +84,7 @@ const login = async (req, res) => {
   });
 };
 
+//* haven't used yet in project;
 const createEmployee = async (req, res) => {
   const { name, email, password } = req.body;
   if (req.user.role !== "manager") {
@@ -159,4 +182,5 @@ export {
   updateEmployeeStatus,
   getAllEmployee,
   getCurrentUser,
+  verifyEmail,
 };

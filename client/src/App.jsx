@@ -10,7 +10,9 @@ import {
   ProtectedRoute,
   Register,
   Task,
+  VerifyMail,
 } from "./page";
+
 function App() {
   return (
     <BrowserRouter>
@@ -50,6 +52,7 @@ function App() {
           }
         />
         <Route path="/dashboard/employee" element={<DashboardEmployee />} />
+        <Route path="/user/verify-email" element={<VerifyMail />} />
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

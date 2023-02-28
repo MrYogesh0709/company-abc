@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Error from "./error/Error";
 import AllEmployee from "./dashboard/AllEmployee";
 import CreateTask from "./dashboard/CreateTask";
+import VerifyMail from "./VerifyMail";
 
 export {
   DashboardEmployee,
@@ -18,4 +19,5 @@ export {
   Error,
   AllEmployee,
   CreateTask,
+  VerifyMail,
 };

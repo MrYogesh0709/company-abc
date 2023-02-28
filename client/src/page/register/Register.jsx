@@ -25,7 +25,8 @@ const Register = () => {
     isMember: true,
   };
   const {
-    setupUser,
+    signUpUser,
+    loginUser,
     isLoading,
     message,
     severity,
@@ -45,16 +46,15 @@ const Register = () => {
     const currentUser = { name, email, password };
 
     if (isMember) {
-      setupUser({
+      loginUser({
         currentUser,
         endPoint: "login",
         alertText: "Login Success! Redirecting...",
       });
     } else {
-      setupUser({
+      signUpUser({
         currentUser,
         endPoint: "register",
-        alertText: "User created! Redirecting...",
       });
     }
   };

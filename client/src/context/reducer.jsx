@@ -22,6 +22,8 @@ import {
   SET_ALERT,
   UPDATE_TASK_BEGIN,
   UPDATE_TASK_SUCCESS,
+  VERIFY_EMAIL_BEGIN,
+  VERIFY_EMAIL_SUCCESS,
 } from "./action";
 import { initialState } from "./appContext";
 
@@ -223,6 +225,18 @@ const reducer = (state, action) => {
         message,
         severity: action.payload.severity,
         open: true,
+      };
+    }
+    case VERIFY_EMAIL_BEGIN: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case VERIFY_EMAIL_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
       };
     }
     default:

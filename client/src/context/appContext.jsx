@@ -26,6 +26,8 @@ import {
   SET_ALERT,
   UPDATE_TASK_BEGIN,
   UPDATE_TASK_SUCCESS,
+  VERIFY_EMAIL_BEGIN,
+  VERIFY_EMAIL_SUCCESS,
 } from "./action";
 import axios from "axios";
 
@@ -49,7 +51,33 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const setupUser = async ({ currentUser, endPoint, alertText }) => {
+  const signUpUser = async ({ currentUser, endPoint }) => {
+    dispatch({ type: SETUP_USER_BEGIN });
+    try {
+      const { data } = await axios.post(
+        `/api/v1/auth/${endPoint}`,
+        currentUser,
+        {
+          withCredentials: true,
+        }
+      );
+      const { msg } = data;
+      dispatch({
+        type: SETUP_USER_SUCCESS,
+        payload: {
+          message: msg,
+          severity: "success",
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: SET_ALERT,
+        payload: { message: error.response.data.msg, severity: "error" },
+      });
+    }
+  };
+
+  const loginUser = async ({ currentUser, endPoint, alertText }) => {
     dispatch({ type: SETUP_USER_BEGIN });
     try {
       const { data } = await axios.post(
@@ -302,6 +330,22 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
 
+  const verificationToken = async ({ token, email }) => {
+    dispatch({ type: VERIFY_EMAIL_BEGIN });
+    try {
+      await await axios.post("/api/v1/auth/verify-email", {
+        verificationToken: token,
+        email: email,
+      });
+      dispatch({ type: VERIFY_EMAIL_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: SET_ALERT,
+        payload: { message: error.response.data.msg, severity: "error" },
+      });
+    }
+  };
+
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -310,7 +354,8 @@ const AppProvider = ({ children }) => {
     <AppContext.Provider
       value={{
         ...state,
-        setupUser,
+        signUpUser,
+        loginUser,
         getEmployeeTask,
         logoutUser,
         getCurrentUser,
@@ -325,6 +370,7 @@ const AppProvider = ({ children }) => {
         createTask,
         updateTask,
         changePage,
+        verificationToken,
       }}
     >
       {children}

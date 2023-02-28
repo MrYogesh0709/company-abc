@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 const errorHandlerMiddleware = (err, req, res, next) => {
   //this (error.msg) so here clg(err.msg) is built in js so we check that first
   //default error for frontend
-  console.log(err);
+  // console.log(err);
   const defaultError = {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     msg: err.message || "Something went wrong",
