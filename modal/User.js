@@ -66,4 +66,5 @@ UserSchema.methods.createJWT = function () {
     }
   );
 };
+
 export default mongoose.model("User", UserSchema);

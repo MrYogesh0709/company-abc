@@ -91,12 +91,11 @@ const AppProvider = ({ children }) => {
           withCredentials: true,
         }
       );
-      const { user, role } = data;
+      const { user } = data;
       dispatch({
         type: SETUP_USER_SUCCESS,
         payload: {
           user,
-          role,
           message: alertText,
           severity: "success",
         },
@@ -148,8 +147,8 @@ const AppProvider = ({ children }) => {
       const { data } = await axios.get(`/api/v1/auth/getCurrentUser`, {
         withCredentials: true,
       });
-      const { user, role } = data;
-      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, role } });
+      const { user } = data;
+      dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user } });
     } catch (error) {
       logoutCurrentUser();
     }

@@ -60,11 +60,10 @@ const reducer = (state, action) => {
       };
     }
     case SETUP_USER_SUCCESS: {
-      const { user, role, message, severity } = action.payload;
+      const { user, message, severity } = action.payload;
       return {
         ...state,
         user,
-        role,
         message,
         severity,
         isLoading: false,
@@ -100,7 +99,6 @@ const reducer = (state, action) => {
         ...state,
         userLoading: false,
         user: action.payload.user,
-        role: action.payload.role,
       };
     }
     case GET_EMPLOYEE_TASK_BEGIN: {

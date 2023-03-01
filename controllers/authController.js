@@ -76,7 +76,9 @@ const login = async (req, res) => {
   if (!user.isVerified) {
     throw new UnauthenticatedError("Please verify your email");
   }
+
   const token = user.createJWT();
+
   attachCookie({ res, token });
   user.password = undefined;
   res.status(StatusCodes.OK).json({
@@ -86,7 +88,6 @@ const login = async (req, res) => {
       name: user.name,
       isActive: user.isActive,
     },
-    role: user.role,
   });
 };
 
