@@ -26,7 +26,7 @@ router.patch(
   authenticatedUser,
   updateEmployeeStatus
 );
-router.get("/logout", authenticatedUser, logout);
+router.get("/logout", logout);
 
 router.route("/getCurrentUser").get(authenticatedUser, getCurrentUser);
 router.route("/verify-email").post(verifyEmail);
