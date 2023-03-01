@@ -1,8 +1,8 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAppContext } from "../context/appContext";
+import { useAppContext } from "../../context/appContext";
 import PropTypes from "prop-types";
-import { Loading } from "../components";
+import { Loading } from "../../components";
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, userLoading } = useAppContext();

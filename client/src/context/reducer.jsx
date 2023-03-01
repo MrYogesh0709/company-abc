@@ -5,6 +5,8 @@ import {
   CREATE_TASK_SUCCESS,
   EDIT_EMPLOYEE_BEGIN,
   EDIT_EMPLOYEE_SUCCESS,
+  FORGOT_PASSWORD_BEGIN,
+  FORGOT_PASSWORD_SUCCESS,
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_SUCCESS,
   GET_EMPLOYEE_BEGIN,
@@ -17,6 +19,8 @@ import {
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
   REMOVE_EMPLOYEE_SUCCESS,
+  RESET_PASSWORD_BEGIN,
+  RESET_PASSWORD_SUCCESS,
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SET_ALERT,
@@ -31,7 +35,14 @@ const reducer = (state, action) => {
   switch (action.type) {
     case SET_ALERT: {
       const { message, severity } = action.payload;
-      return { ...state, message, severity, open: true, isLoading: false };
+      return {
+        ...state,
+        message,
+        severity,
+        open: true,
+        isLoading: false,
+        success: true,
+      };
     }
     case CLEAR_ALERT: {
       return {
@@ -237,6 +248,38 @@ const reducer = (state, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+    }
+    case FORGOT_PASSWORD_BEGIN: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case FORGOT_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        message: action.payload.message,
+        severity: action.payload.severity,
+        open: true,
+      };
+    }
+    case RESET_PASSWORD_BEGIN: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case RESET_PASSWORD_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        success: true,
+        message: action.payload.message,
+        severity: action.payload.severity,
+        open: true,
       };
     }
     default:

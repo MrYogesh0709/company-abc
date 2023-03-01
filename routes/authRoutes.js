@@ -9,6 +9,8 @@ import {
   getAllEmployee,
   getCurrentUser,
   verifyEmail,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/authController.js";
 import authenticatedUser from "../middleware/auth.js";
 const router = express.Router();
@@ -25,7 +27,11 @@ router.patch(
   updateEmployeeStatus
 );
 router.get("/logout", authenticatedUser, logout);
+
 router.route("/getCurrentUser").get(authenticatedUser, getCurrentUser);
 router.route("/verify-email").post(verifyEmail);
+
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;

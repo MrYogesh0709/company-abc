@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useAppContext } from "../context/appContext";
 import { Link, useLocation } from "react-router-dom";
-import { Loading } from "../components";
+import { Loading } from ".";
 import { Box, Button, Container, Typography } from "@mui/material";
 
 function useQuery() {

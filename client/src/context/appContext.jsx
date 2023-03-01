@@ -9,6 +9,8 @@ import {
   CREATE_TASK_SUCCESS,
   EDIT_EMPLOYEE_BEGIN,
   EDIT_EMPLOYEE_SUCCESS,
+  FORGOT_PASSWORD_BEGIN,
+  FORGOT_PASSWORD_SUCCESS,
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_SUCCESS,
   GET_EMPLOYEE_BEGIN,
@@ -21,6 +23,8 @@ import {
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
   REMOVE_EMPLOYEE_SUCCESS,
+  RESET_PASSWORD_BEGIN,
+  RESET_PASSWORD_SUCCESS,
   SETUP_USER_BEGIN,
   SETUP_USER_SUCCESS,
   SET_ALERT,
@@ -346,6 +350,46 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const forgotPassword = async ({ email }) => {
+    dispatch({ type: FORGOT_PASSWORD_BEGIN });
+    try {
+      const { data } = await axios.post("/api/v1/auth/forgot-password", {
+        email,
+      });
+      const { msg } = data;
+      dispatch({
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: { message: msg, severity: "success" },
+      });
+    } catch (error) {
+      dispatch({
+        type: SET_ALERT,
+        payload: { message: error.response.data.msg, severity: "error" },
+      });
+    }
+  };
+
+  const resetPassword = async ({ password, token, email }) => {
+    dispatch({ type: RESET_PASSWORD_BEGIN });
+    try {
+      const { data } = await axios.post("/api/v1/auth/reset-password", {
+        password,
+        token,
+        email,
+      });
+      const { msg } = data;
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: { message: msg, severity: "success" },
+      });
+    } catch (error) {
+      dispatch({
+        type: SET_ALERT,
+        payload: { message: error.response.data.msg, severity: "error" },
+      });
+    }
+  };
+
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -371,6 +415,8 @@ const AppProvider = ({ children }) => {
         updateTask,
         changePage,
         verificationToken,
+        forgotPassword,
+        resetPassword,
       }}
     >
       {children}

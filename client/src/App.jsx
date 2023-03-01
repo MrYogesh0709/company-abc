@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ForgetPassword, ResetPassword, VerifyMail } from "./components";
 import {
   AllEmployee,
   CreateTask,
@@ -10,7 +11,6 @@ import {
   ProtectedRoute,
   Register,
   Task,
-  VerifyMail,
 } from "./page";
 
 function App() {
@@ -53,6 +53,10 @@ function App() {
         />
         <Route path="/dashboard/employee" element={<DashboardEmployee />} />
         <Route path="/user/verify-email" element={<VerifyMail />} />
+
+        <Route path="/forgot-password" element={<ForgetPassword />} />
+        <Route path="/user/reset-password" element={<ResetPassword />} />
+
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/appContext";
 import {
   Alert,
@@ -143,23 +143,22 @@ const Register = () => {
           >
             {values.isMember ? "Sign In" : "Sign Up"}
           </Button>
+          <Link to="/forgot-password" variant="body2">
+            <Button fullWidth sx={{ mt: 3, mb: 2 }}>
+              Forgot password?
+            </Button>
+          </Link>
           <Grid container>
-            {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
-            <Grid item>
-              <Button
-                onClick={() => {
-                  setValues({ ...values, isMember: !values.isMember });
-                }}
-              >
-                {values.isMember
-                  ? "Already have account? Sign IN"
-                  : "Don't have an account? Sign Up"}
-              </Button>
-            </Grid>
+            <Button
+              fullWidth
+              onClick={() => {
+                setValues({ ...values, isMember: !values.isMember });
+              }}
+            >
+              {values.isMember
+                ? "Already have account? Sign IN"
+                : "Don't have an account? Sign Up"}
+            </Button>
           </Grid>
         </Box>
       </Box>
