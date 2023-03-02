@@ -19,6 +19,8 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_TASK_BEGIN,
   GET_EMPLOYEE_TASK_SUCCESS,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
   LOGOUT_CURRENT_USER,
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
@@ -82,7 +84,7 @@ const AppProvider = ({ children }) => {
   };
 
   const loginUser = async ({ currentUser, endPoint, alertText }) => {
-    dispatch({ type: SETUP_USER_BEGIN });
+    dispatch({ type: LOGIN_USER_BEGIN });
     try {
       const { data } = await axios.post(
         `/api/v1/auth/${endPoint}`,
@@ -93,7 +95,7 @@ const AppProvider = ({ children }) => {
       );
       const { user } = data;
       dispatch({
-        type: SETUP_USER_SUCCESS,
+        type: LOGIN_USER_SUCCESS,
         payload: {
           user,
           message: alertText,
@@ -122,13 +124,13 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_ALERT });
   };
   const logoutUser = async () => {
-    await axios.get(`/api/v1/auth/logout`, {
+    await axios.delete(`/api/v1/auth/logout`, {
       withCredentials: true,
     });
   };
 
   const logoutCurrentUser = async () => {
-    await axios.get(`/api/v1/auth/logout`, {
+    await axios.delete(`/api/v1/auth/logout`, {
       withCredentials: true,
     });
     dispatch({ type: LOGOUT_CURRENT_USER });
@@ -150,6 +152,7 @@ const AppProvider = ({ children }) => {
       const { user } = data;
       dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user } });
     } catch (error) {
+      if (error.response.status === 401) return;
       logoutCurrentUser();
     }
   };

@@ -56,15 +56,15 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
   return isMatch;
 };
-
-UserSchema.methods.createJWT = function () {
-  return jwt.sign(
-    { userId: this._id, role: this.role },
-    process.env.JWT_SECRET_KEY,
-    {
-      expiresIn: process.env.JWT_LIFETIME,
-    }
-  );
-};
+//* another way of createJWT
+// UserSchema.methods.createJWT = function () {
+//   return jwt.sign(
+//     { userId: this._id, role: this.role },
+//     process.env.JWT_SECRET_KEY,
+//     {
+//       expiresIn: process.env.JWT_LIFETIME,
+//     }
+//   );
+// };
 
 export default mongoose.model("User", UserSchema);

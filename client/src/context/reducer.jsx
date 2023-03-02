@@ -15,6 +15,8 @@ import {
   GET_EMPLOYEE_SUCCESS,
   GET_EMPLOYEE_TASK_BEGIN,
   GET_EMPLOYEE_TASK_SUCCESS,
+  LOGIN_USER_BEGIN,
+  LOGIN_USER_SUCCESS,
   LOGOUT_CURRENT_USER,
   LOGOUT_USER,
   REMOVE_EMPLOYEE_BEGIN,
@@ -60,10 +62,27 @@ const reducer = (state, action) => {
       };
     }
     case SETUP_USER_SUCCESS: {
+      const { message, severity } = action.payload;
+      return {
+        ...state,
+        message,
+        severity,
+        isLoading: false,
+        open: true,
+      };
+    }
+    case LOGIN_USER_BEGIN: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case LOGIN_USER_SUCCESS: {
       const { user, message, severity } = action.payload;
       return {
         ...state,
         user,
+        userLoading: false,
         message,
         severity,
         isLoading: false,
