@@ -13,6 +13,7 @@ import {
   sendResetPasswordEmail,
   createTokenUser,
   attachCookiesToResponse,
+  origin,
 } from "../utils/index.js";
 import Token from "../modal/Token.js";
 
@@ -28,8 +29,6 @@ const register = async (req, res) => {
   const role = isFirstAccount ? "manager" : "employee";
 
   const verificationToken = await crypto.randomBytes(40).toString("hex");
-  const origin = "https://comapny-abc.onrender.com";
-  // const origin = "http://localhost:5173";
 
   const user = new User({ name, email, role, password, verificationToken });
   await user.save();
@@ -75,7 +74,15 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Incorrect password");
   }
+  const verificationToken = await crypto.randomBytes(40).toString("hex");
+
   if (!user.isVerified) {
+    await sendVerificationEmail({
+      name: user.name,
+      email: user.email,
+      verificationToken: verificationToken,
+      origin: origin,
+    });
     throw new UnauthenticatedError("Please verify your email");
   }
 
