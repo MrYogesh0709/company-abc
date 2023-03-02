@@ -74,15 +74,7 @@ const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Incorrect password");
   }
-  const verificationToken = await crypto.randomBytes(40).toString("hex");
-
   if (!user.isVerified) {
-    await sendVerificationEmail({
-      name: user.name,
-      email: user.email,
-      verificationToken: verificationToken,
-      origin: origin,
-    });
     throw new UnauthenticatedError("Please verify your email");
   }
 
