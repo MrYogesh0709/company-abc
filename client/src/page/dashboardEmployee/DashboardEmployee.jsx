@@ -20,7 +20,6 @@ import { Link } from "react-router-dom";
 
 const DashboardEmployee = () => {
   const { getEmployeeTask, tasks, user, isLoading } = useAppContext();
-  console.log(user);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   useEffect(() => {
     getEmployeeTask().then(() => setIsDataLoaded(true));
