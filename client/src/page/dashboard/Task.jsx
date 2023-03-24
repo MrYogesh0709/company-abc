@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "@context/appContext";
 import {
   Box,
   Button,
@@ -14,8 +14,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { Loading, SnackbarComponent } from "../../components";
-import task from "../../assets/task.svg";
+import { Loading, SnackbarComponent } from "@components";
+import task from "@assets/task.svg";
 import moment from "moment";
 
 const Task = () => {

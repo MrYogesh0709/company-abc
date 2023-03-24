@@ -1,21 +1,9 @@
-import Dashboard from "./dashboard/Dashboard";
-import DashboardEmployee from "./dashboardEmployee/DashboardEmployee";
-import Home from "./home/Home";
-import Register from "./register/Register";
-import Task from "./dashboard/Task";
-import ProtectedRoute from "./protectedRoute/ProtectedRoute";
-import Error from "./error/Error";
-import AllEmployee from "./dashboard/AllEmployee";
-import CreateTask from "./dashboard/CreateTask";
-
-export {
-  DashboardEmployee,
-  Dashboard,
-  Register,
-  Task,
-  Home,
-  ProtectedRoute,
-  Error,
-  AllEmployee,
-  CreateTask,
-};
+export { default as Home } from "./home/Home";
+export { default as DashboardEmployee } from "./dashboardEmployee/DashboardEmployee";
+export { default as Dashboard } from "./dashboard/Dashboard";
+export { default as Register } from "./register/Register";
+export { default as ProtectedRoute } from "./protectedRoute/ProtectedRoute";
+export { default as Error } from "./error/Error";
+export { default as AllEmployee } from "./dashboard/AllEmployee";
+export { default as CreateTask } from "./dashboard/CreateTask";
+export { default as Task } from "./dashboard/Task";

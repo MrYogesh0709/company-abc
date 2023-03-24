@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "@context/appContext";
 import { TextField, Button, Grid, Container, Box } from "@mui/material";
-import { SnackbarComponent } from "../../components";
+import { SnackbarComponent } from "@components";
 
 const CreateTask = () => {
   const { id } = useParams();

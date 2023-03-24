@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "@context/appContext";
 import {
   Loading,
   Logout,
   PageBtnContainer,
   SnackbarComponent,
-} from "../../components";
+} from "@components";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import task from "../../assets/task.svg";
+import task from "@assets/task.svg";
 import moment from "moment";
 import {
   Paper,

@@ -14,7 +14,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import task from "../../assets/task.svg";
+import task from "@assets/task.svg";
 import moment from "moment";
 import { Link } from "react-router-dom";
 

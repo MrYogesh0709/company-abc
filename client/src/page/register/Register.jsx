@@ -2,7 +2,7 @@ import * as React from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
+import { useAppContext } from "@context/appContext";
 import {
   Alert,
   Snackbar,

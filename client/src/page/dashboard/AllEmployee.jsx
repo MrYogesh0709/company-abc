@@ -10,8 +10,8 @@ import {
 import { Container } from "@mui/system";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppContext } from "../../context/appContext";
-import { SnackbarComponent } from "../../components";
+import { useAppContext } from "@context/appContext";
+import { SnackbarComponent } from "@components";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
