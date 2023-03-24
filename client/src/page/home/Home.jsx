@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-import company from "../../assets/company.svg";
-import logo from "../../assets/logo.svg";
-import { Copyright, SnackbarComponent } from "../../components";
+import company from "@assets/company.svg";
+import logo from "@assets/logo.svg";
+import { Copyright, SnackbarComponent } from "@components";
 
 const Home = () => {
   const theme = useTheme();

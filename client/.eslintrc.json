@@ -10,7 +10,12 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
-  "rules": {
-    "no-unused-vars": "warn"
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }

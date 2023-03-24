@@ -20,6 +20,7 @@ const createTask = async (req, res) => {
     role: "employee",
     isActive: true,
   });
+
   if (!assignedEmployee) {
     throw new BadRequestError("Invalid assignedTo employee");
   }
@@ -104,6 +105,7 @@ const getAllTask = async (req, res) => {
 
 const getEmployeeTask = async (req, res) => {
   const employeeId = req.user.userId;
+  //? add checkPermissions
   const tasks = await Task.find({ assignedTo: employeeId });
   const user = await User.findOne({ _id: employeeId });
   res.status(StatusCodes.OK).json({
