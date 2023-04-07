@@ -6,11 +6,11 @@ import {
   CreateTask,
   Dashboard,
   DashboardEmployee,
-  Error,
   Home,
   ProtectedRoute,
   Register,
   Task,
+  Error,
 } from "./page";
 
 function App() {

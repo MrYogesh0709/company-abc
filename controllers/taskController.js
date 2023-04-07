@@ -6,12 +6,9 @@ import {
 } from "../errors/index.js";
 import Task from "../modal/Task.js";
 import User from "../modal/User.js";
+import checkPermissions from "../utils/checkPermissions.js";
 
 const createTask = async (req, res) => {
-  // Check if the user is a manager
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Only managers can create Task");
-  }
   const { id: employeeId } = req.params;
   const { title, description, startDate, dueDate } = req.body;
   // Check if the assignedTo employee exists in the database
@@ -42,9 +39,6 @@ const createTask = async (req, res) => {
 };
 
 const getSpecificEmployeeTask = async (req, res) => {
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Only managers can create Task");
-  }
   const { id: employeeId } = req.params;
   const tasks = await Task.find({ assignedTo: employeeId });
   const user = await User.findOne({ _id: employeeId });
@@ -63,9 +57,6 @@ const getSpecificEmployeeTask = async (req, res) => {
 };
 
 const completeTask = async (req, res) => {
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Only managers will approve tasks");
-  }
   const { id: taskId } = req.params;
   const task = await Task.findById(taskId);
 
@@ -85,9 +76,6 @@ const completeTask = async (req, res) => {
 };
 
 const getAllTask = async (req, res) => {
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Only managers are allowed");
-  }
   const queryObject = { createdBy: req.user.userId };
 
   let result = Task.find().sort("-createdAt");
@@ -105,7 +93,7 @@ const getAllTask = async (req, res) => {
 
 const getEmployeeTask = async (req, res) => {
   const employeeId = req.user.userId;
-  //? add checkPermissions
+
   const tasks = await Task.find({ assignedTo: employeeId });
   const user = await User.findOne({ _id: employeeId });
   res.status(StatusCodes.OK).json({

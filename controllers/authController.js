@@ -129,25 +129,16 @@ const createEmployee = async (req, res) => {
 };
 
 const getAllEmployee = async (req, res) => {
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Unauthorized to this route");
-  }
   const employees = await User.find({ role: "employee" }).select("-password");
   res.status(StatusCodes.OK).json({ employees });
 };
 
 const removeEmployee = async (req, res) => {
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Unauthorized to this route");
-  }
-  // Find the user to remove by ID
   const { id } = req.params;
   const user = await User.findById(id);
-  // If user not found, return 404 status code
   if (!user) {
     throw new NotFoundError("User not found");
   }
-  // Remove the user
   await user.remove();
   await Task.deleteMany({ assignedTo: id });
 
@@ -155,9 +146,6 @@ const removeEmployee = async (req, res) => {
 };
 
 const updateEmployeeStatus = async (req, res) => {
-  if (req.user.role !== "manager") {
-    throw new UnauthenticatedError("Unauthorized to this route");
-  }
   const { id } = req.params;
   const user = await User.findById(id);
   if (!user) {
@@ -166,7 +154,6 @@ const updateEmployeeStatus = async (req, res) => {
   if (user.isActive === false) {
     throw new BadRequestError("User is already InActive");
   }
-  // Update the user status to inactive
   user.isActive = false;
   await user.save();
   res

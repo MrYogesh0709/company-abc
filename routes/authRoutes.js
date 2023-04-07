@@ -12,18 +12,29 @@ import {
   forgotPassword,
   resetPassword,
 } from "../controllers/authController.js";
-import authenticatedUser from "../middleware/auth.js";
+import authenticatedUser, { authorizePermissions } from "../middleware/auth.js";
 const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
 //*not  used this route yet
 router.post("/createEmployee", authenticatedUser, createEmployee);
-router.get("/getAllEmployee", authenticatedUser, getAllEmployee);
-router.delete("/removeEmployee/:id", authenticatedUser, removeEmployee);
+router.get(
+  "/getAllEmployee",
+  authenticatedUser,
+  authorizePermissions("manager"),
+  getAllEmployee
+);
+router.delete(
+  "/removeEmployee/:id",
+  authenticatedUser,
+  authorizePermissions("manager"),
+  removeEmployee
+);
 router.patch(
   "/updateEmployeeStatus/:id",
   authenticatedUser,
+  authorizePermissions("manager"),
   updateEmployeeStatus
 );
 
